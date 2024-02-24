@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Patient Registration</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="registration.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6">
+              <form action="/asha_login" method="POST">
+                  <br />
+                  <legend>Enter patient details.</legend>
+                  <br />
+                  <h2>Name *</h2>
+                  <input type="text" name="name" class="form-control" placeholder="User Name">                   
+                  <br />
+                  <h2>Gender *</h2>
+                  <input type="text" name="gender" class="form-control" placeholder="Gender"> 
+                  <br />
+                  <h2>AADHAR Number *</h2>
+                  <input type="text" name="aadhar" class="form-control" placeholder="AADHAR Number"> 
+                  <br />
+                  <h2>Phone Number *</h2>
+                  <input type="text" name="phone" class="form-control" placeholder="Phone no."> 
+                  <br />
+                  <h2>City *</h2>
+                  <input type="text" name="city" class="form-control" placeholder="City">                   
+                  <br />
+                  <h2>State *</h2>
+                  <input type="text" name="state" class="form-control" placeholder="State">                                    
+                  <br />
+                  <br />
+                  <button type="submit" class="btn btn-secondary">Register</button>
+              </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
