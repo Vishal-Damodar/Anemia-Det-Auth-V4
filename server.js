@@ -4,8 +4,22 @@ const mongoose = require('mongoose');
 const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
+const multer  = require('multer');
+const fs = require('fs');
 
 const app = express();
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/'); // Specify the directory where uploaded files should be stored
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname); // Use the original file name for the uploaded file
+    }
+});
+
+const upload = multer({ storage: storage });
+module.exports = upload;
 
 //------------ Passport Configuration ------------//
 require('./config/passport')(passport);

@@ -1,7 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const { ensureAuthenticated } = require("../config/checkAuth");
+const { ensureUser} = require('../controllers/userController');
 const ashaController = require('../controllers/ashaController')
+const userController = require('../controllers/userController')
+const upload = require('../server');
 
 //------------ Welcome Route ------------//
 router.get("/", (req, res) => {
@@ -15,17 +18,20 @@ router.get("/dashboard", ensureAuthenticated, (req, res) =>
   }),
 );
 
-router.get("/user_result", ensureAuthenticated, (req, res) =>
-  res.render("user_result", {
-    name: req.user.name,
-  }),
-);
+router.get("/user_result", (req, res) => {
+  const aadhar = req.query.aadhar; // Retrieve the Aadhar number from the query parameters
+  res.render("user_result", { aadhar }); // Pass the Aadhar number to the 'user_result' view
+});
 
 router.get("/asha_login", ensureAuthenticated, (req, res) =>
   res.render("asha_login")
 );
 
-router.post('/asha_login', ashaController.registerHandle);
+router.post('/asha_login', upload.fields([
+    { name: 'eyeImageData', maxCount: 1 },
+    { name: 'nailImageData', maxCount: 1 },
+    { name: 'tongueImageData', maxCount: 1 }
+]), ashaController.registerHandle);
 
 router.get("/doctor_login", ensureAuthenticated, (req, res) =>
   res.render("doctor_login", {

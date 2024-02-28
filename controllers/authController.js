@@ -9,6 +9,7 @@ const JWT_RESET_KEY = "jwtresetkey987";
 
 //------------ User Model ------------//
 const User = require('../models/User');
+const Patient = require('../models/Patient');
 
 //------------ Register Handle ------------//
 exports.registerHandle = (req, res) => {
@@ -420,16 +421,28 @@ exports.loginHandle = (req, res, next) => {
 
 
 exports.loginUserHandle = (req, res, next) => {
-    passport.authenticate('local', {
-        successRedirect: '/user_result',
-        failureRedirect: '/auth/user_login',
-        failureFlash: true
-    })(req, res, next);
-}
+  const { aadhar } = req.body;
+
+  Patient.findOne({ aadhar })
+    .then(user => {
+      if (user) {
+        // If the user is found, redirect to the '/user_result' route and pass the Aadhar number
+        res.redirect(`/user_result?aadhar=${aadhar}`);
+      } else {
+        req.flash("error_msg", "User not found. Please Take a test.")
+        res.render('user_login', { aadhar });
+      }
+    })
+    .catch(err => {
+      console.error("Error finding user:", err);
+      req.flash("error_msg", "An error occurred. Please try again later.");
+      res.redirect('/user_login');
+    });
+};
 
 //------------ Logout Handle ------------//
 exports.logoutHandle = (req, res) => {
     req.logout();
     req.flash('success_msg', 'You are logged out');
-    res.redirect('/auth/login');
+    res.redirect('/');
 }
