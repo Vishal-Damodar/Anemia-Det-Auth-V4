@@ -1,3 +1,72 @@
-<h1 class="mt-4">USER Result</h1>
-<p class="lead mb-3">Please Wait... <%= aadhar %></p>
-<a href="/auth/logout" class="btn btn-secondary">Logout</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .patient-info {
+            margin-bottom: 20px;
+        }
+        .patient-info p {
+            margin: 10px 0;
+        }
+        .image-container {
+            text-align: center;
+        }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Patient Details</h1>
+    <div class="container">
+        <div class="patient-info">
+            <p><strong>Name:</strong> <%= patient.name %></p>
+            <p><strong>Gender:</strong> <%= patient.gender %></p>
+            <p><strong>Aadhar:</strong> <%= patient.aadhar %></p>
+            <p><strong>Phone:</strong> <%= patient.phone %></p>
+            <p><strong>City:</strong> <%= patient.city %></p>
+            <p><strong>State:</strong> <%= patient.state %></p>
+        </div>
+        <!-- Display Eye Image -->
+        <div class="image-container">
+            <p><strong>Eye Image:</strong></p>
+            <img src="/<%= patient.eyeImage.url%>" alt="Eye Image">
+        </div>
+        <!-- Display Nail Image -->
+        <div class="image-container">
+            <p><strong>Nail Image:</strong></p>
+            <img src="/<%= patient.nailImage.url%>" alt="Nail Image">
+        </div>
+        <!-- Display Tongue Image -->
+        <div class="image-container">
+            <p><strong>Tongue Image:</strong></p>
+            <img src="/<%= patient.tongueImage.url%>" alt="Tongue Image">
+        </div>
+    </div>
+</body>
+</html>

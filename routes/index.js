@@ -18,10 +18,12 @@ router.get("/dashboard", ensureAuthenticated, (req, res) =>
   }),
 );
 
-router.get("/user_result", (req, res) => {
-  const aadhar = req.query.aadhar; // Retrieve the Aadhar number from the query parameters
-  res.render("user_result", { aadhar }); // Pass the Aadhar number to the 'user_result' view
-});
+// router.get("/user_result", (req, res) => {
+//   const aadhar = req.query.aadhar; // Retrieve the Aadhar number from the query parameters
+//   res.render("user_result", { aadhar }); // Pass the Aadhar number to the 'user_result' view
+// });
+
+router.get("/user_result", userController.getUserResult);
 
 router.get("/asha_login", ensureAuthenticated, (req, res) =>
   res.render("asha_login")

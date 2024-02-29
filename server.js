@@ -20,6 +20,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 module.exports = upload;
+app.use('/uploads', express.static('uploads'));
 
 //------------ Passport Configuration ------------//
 require('./config/passport')(passport);
