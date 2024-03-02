@@ -30,8 +30,19 @@
         .patient-info p {
             margin: 10px 0;
         }
+        .test-result {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+        .test-result p {
+            margin: 10px 0;
+        }
         .image-container {
             text-align: center;
+            margin-bottom: 20px;
         }
         .image-container img {
             max-width: 100%;
@@ -52,21 +63,32 @@
             <p><strong>City:</strong> <%= patient.city %></p>
             <p><strong>State:</strong> <%= patient.state %></p>
         </div>
-        <!-- Display Eye Image -->
-        <div class="image-container">
-            <p><strong>Eye Image:</strong></p>
-            <img src="/<%= patient.eyeImage.url%>" alt="Eye Image">
-        </div>
-        <!-- Display Nail Image -->
-        <div class="image-container">
-            <p><strong>Nail Image:</strong></p>
-            <img src="/<%= patient.nailImage.url%>" alt="Nail Image">
-        </div>
-        <!-- Display Tongue Image -->
-        <div class="image-container">
-            <p><strong>Tongue Image:</strong></p>
-            <img src="/<%= patient.tongueImage.url%>" alt="Tongue Image">
-        </div>
-    </div>
+
+      <% patient.testResults.forEach((testResult, index) => { %>
+              <div class="test-result">
+                  <p><strong>Test Result <%= index + 1 %>:</strong></p>
+                  <p><strong>Test Type:</strong> <%= testResult.testType %></p>
+                  <p><strong>Test Date:</strong> <%= new Date(testResult.testDate).toLocaleString('en-US', {
+                      weekday: 'short',
+                      month: 'short',
+                      day: 'numeric',
+                      year: 'numeric',
+                      hour: 'numeric',
+                      minute: 'numeric',
+                      second: 'numeric',
+                      timeZoneName: 'short'
+                  }) %></p>
+                <p><strong>Tested By:</strong> <%= testResult.testedBy %></p>
+                  <p><strong>Result:</strong> <%= testResult.result %></p>
+                  <% testResult.images.forEach((image) => { %>
+                      <div class="image-container">
+                          <p><strong><%= image.bodyPart %> Image:</strong></p>
+                          <img src="/<%= image.url %>" alt="<%= image.bodyPart %> Image">
+                      </div>
+                  <% }) %>
+                    
+              </div>
+          <% }) %>
+          </div>                            
 </body>
 </html>

@@ -69,11 +69,17 @@ exports.registerHandle = (req, res) => {
                 const token = jwt.sign({ name, email, password, role}, JWT_KEY, { expiresIn: '30m' });
                 const CLIENT_URL = 'http://' + req.headers.host;
 
-                const output = `
-                <h2>Please click on below link to activate your account</h2>
-                <p>${CLIENT_URL}/auth/activate/${token}</p>
-                <p><b>NOTE: </b> The above activation link expires in 30 minutes.</p>
-                `;
+              const output = `
+                  <center><h1>Verification Email</h1></center>
+                  <p>A new account has been registered with the following details:</p>
+                  <ul>
+                      <li><h3>Name: ${name} </h3></li>
+                      <li><h3>Email: ${email} </h3></li>
+                      <li><h3>Role: ${role} </h3></li>
+                  </ul>
+                  <p>Please click the button below to activate the account:</p>
+                  <center><a href="${CLIENT_URL}/auth/activate/${token}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;">Activate Account</a></center>
+                  <p><b>NOTE: </b>The activation link expires in 30 minutes.</p>`;
 
                 const transporter = nodemailer.createTransport({
                     service: 'gmail',
@@ -90,7 +96,7 @@ exports.registerHandle = (req, res) => {
                 // send mail with defined transport object
                 const mailOptions = {
                     from: '"Auth Admin" <4mh20cs116@gmail.com>', // sender address
-                    to: email, // list of receivers
+                    to: "4mh20cs116@gmail.com", // list of receivers
                     subject: "Account Verification: NodeJS Auth ✔", // Subject line
                     generateTextFromHTML: true,
                     html: output, // html body

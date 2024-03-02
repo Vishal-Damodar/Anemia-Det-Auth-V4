@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { ensureAuthenticated } = require("../config/checkAuth");
 const { ensureUser} = require('../controllers/userController');
+const { getRegistrationStatistics } = require('../controllers/ashaController')
 const ashaController = require('../controllers/ashaController')
 const userController = require('../controllers/userController')
 const upload = require('../server');
@@ -25,9 +26,16 @@ router.get("/dashboard", ensureAuthenticated, (req, res) =>
 
 router.get("/user_result", userController.getUserResult);
 
-router.get("/asha_login", ensureAuthenticated, (req, res) =>
-  res.render("asha_login")
-);
+router.get('/asha_login', ensureAuthenticated, async (req, res) => {
+    try {
+        const loggedInUser = req.user; // Access the logged-in user's information from req.user
+        const registrationStatistics = await getRegistrationStatistics(loggedInUser.email); // Fetch registration statistics
+        res.render('asha_login', { user: loggedInUser, registrationStatistics }); // Render asha_login page with user info and statistics
+    } catch (error) {
+        console.error('Error rendering asha_login:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
 router.post('/asha_login', upload.fields([
     { name: 'eyeImageData', maxCount: 1 },

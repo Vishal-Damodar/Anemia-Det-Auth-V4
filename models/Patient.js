@@ -39,10 +39,29 @@ const PatientSchema = new mongoose.Schema({
         type: String,
         default: true
     },
-    // Add references to the images
-    eyeImage: ImageSchema,
-    nailImage: ImageSchema,
-    tongueImage: ImageSchema
+    // Array to store test results
+    testResults: [
+        {
+            testDate: {
+                type: Date,
+                default: Date.now
+            },
+            testType: {
+                type: String,
+                required: true
+            },
+            result: {
+                type: String,
+                required: true
+            },
+            // Add references to the images for this test result
+          images: [ImageSchema],
+          testedBy: {
+                type: String,
+                required: true
+          }
+        }
+    ]
 }, { timestamps: true });
 
 // Create the patient model
