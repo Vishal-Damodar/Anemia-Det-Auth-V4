@@ -7,7 +7,7 @@ const ashaController = require('../controllers/ashaController')
 const userController = require('../controllers/userController')
 const upload = require('../server');
 
-//------------ Welcome Route ------------//
+//------------ Welcome Route ------------//s
 router.get("/", (req, res) => {
   res.render("welcome");
 });
