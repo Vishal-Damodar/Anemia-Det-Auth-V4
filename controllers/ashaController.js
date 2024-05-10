@@ -89,12 +89,41 @@ async function getRegistrationStatistics(ashaEmail) {
     return patients.length;
   } catch (error) {
     console.error("Error finding patients:", error);
-    return 0; // or handle the error accordingly
+    return 0;
   }
 }
+
+async function fetchTestResultsByTester(testedBy) {
+  try {
+    // Fetch patients where the test results were tested by the specified person
+    const patients = await Patient.find({ "testResults.testedBy": testedBy });
+
+    // Extract required data from each patient
+    const testData = patients.map((patient) => ({
+      name: patient.name,
+      aadhar: patient.aadhar,
+      city: patient.city,
+      testResults: patient.testResults.map((result) => ({
+        testDate: result.testDate,
+        result: result.result,
+      })),
+    }));
+    console.log(testData);
+    // Send the extracted data to the frontend
+    return testData;
+  } catch (error) {
+    // Handle errors
+    console.error("Error fetching test results:", error);
+    throw error;
+  }
+}
+
+
+
 module.exports = {
   registerHandle,
-  getRegistrationStatistics, // Include this line to export the getRegistrationStatistics function
+  getRegistrationStatistics,
+  fetchTestResultsByTester: fetchTestResultsByTester
 };
 // const Patient = require("../models/Patient");
 // const fs = require("fs");
