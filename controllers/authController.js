@@ -383,6 +383,7 @@ exports.loginHandle = (req, res, next) => {
                 switch (user.role) {
                     case "Asha":
                         successRedirect = "/asha_login";
+                        console.log("asha");
                         break;
                     case "Doctor":
                         successRedirect = "/doctor_login";
