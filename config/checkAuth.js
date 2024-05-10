@@ -4,13 +4,13 @@ module.exports = {
         if (req.isAuthenticated()) {
             return next();
         }
-        req.flash('error_msg', 'Please log in first!');
-        res.redirect('/auth/login');
+        res.json({ error_msg: "Please log in first!" });
+        res.redirect("/auth/login");
     },
     forwardAuthenticated: function (req, res, next) {
         if (!req.isAuthenticated()) {
             return next();
         }
-        res.redirect('/dashboard');
-    }
+        res.redirect("/dashboard");
+    },
 };

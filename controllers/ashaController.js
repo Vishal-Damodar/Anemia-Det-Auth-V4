@@ -20,15 +20,16 @@ async function registerHandle(req, res) {
 
   // If there are errors, render the form with error messages
   if (errors.length > 0) {
-    req.flash("error_msg", "Please enter all fields.");
-    return res.render("asha_login", {
-      errors,
-      name,
-      gender,
-      aadhar,
-      phone,
-      city,
-      state,
+    return res.json({
+      asha_login: {
+        errors,
+        name,
+        gender,
+        aadhar,
+        phone,
+        city,
+        state,
+      },
     });
   }
 
@@ -73,12 +74,12 @@ async function registerHandle(req, res) {
     // Save the updated patient record
     await existingPatient.save();
 
-    req.flash("success_msg", "Patient Registered.");
+    res.json({ success_msg: "Patient Registered." });
     console.log("Patient Registered");
     res.redirect(`/user_result?aadhar=${aadhar}`);
   } catch (err) {
     console.error(err);
-    req.flash("error_msg", "An error occurred. Please try again later.");
+    res.json({ error_msg: "An error occurred. Please try again later." });
     res.redirect("/asha_login");
   }
 }
@@ -118,12 +119,10 @@ async function fetchTestResultsByTester(testedBy) {
   }
 }
 
-
-
 module.exports = {
   registerHandle,
   getRegistrationStatistics,
-  fetchTestResultsByTester: fetchTestResultsByTester
+  fetchTestResultsByTester: fetchTestResultsByTester,
 };
 // const Patient = require("../models/Patient");
 // const fs = require("fs");

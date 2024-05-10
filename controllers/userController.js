@@ -7,14 +7,16 @@ exports.getUserResult = async (req, res) => {
     const patient = await Patient.findOne({ aadhar });
 
     if (!patient) {
-      return res.render("user_result", { error: "Patient not found" });
+      return res.json({ user_result: { error: "Patient not found" } });
     }
     patient.testResults.sort((a, b) => b.testDate - a.testDate);
-    res.render("user_result", { patient });
+    res.json({ user_result: { patient } });
   } catch (err) {
     console.error(err);
-    res.render("user_result", {
-      error: "An error occurred. Please try again later.",
+    res.json({
+      user_result: {
+        error: "An error occurred. Please try again later.",
+      },
     });
   }
 };

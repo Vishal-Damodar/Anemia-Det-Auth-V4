@@ -12,13 +12,15 @@ const Patient = require("../models/Patient");
 
 //------------ Welcome Route ------------//s
 router.get("/", (req, res) => {
-    res.render("welcome");
+    res.send("welcome");
 });
 
 //------------ Dashboard Route ------------//
 router.get("/dashboard", ensureAuthenticated, (req, res) =>
-    res.render("dash", {
-        name: req.user.name,
+    res.json({
+        dash: {
+            name: req.user.name,
+        },
     }),
 );
 
@@ -37,9 +39,8 @@ router.get("/asha_login", ensureAuthenticated, async (req, res) => {
         const registrationStatistics = await getRegistrationStatistics(
             loggedInUser.email,
         ); // Fetch registration statistics
-        res.render("asha_login", {
-            user: loggedInUser,
-            registrationStatistics,
+        res.json({
+            asha_login: { user: loggedInUser, registrationStatistics },
         }); // Render asha_login page with user info and statistics
     } catch (error) {
         console.error("Error rendering asha_login:", error);
