@@ -41,10 +41,10 @@ mongoose
     .catch((err) => console.log(err));
 
 // //------------ EJS Configuration ------------//
-app.use(expressLayouts);
-app.use("/assets", express.static('./assets'));
-app.set('view engine', 'ejs');
-app.use(bodyParser.json());
+// app.use(expressLayouts);
+// app.use("/assets", express.static('./assets'));
+// app.set('view engine', 'ejs');
+// app.use(bodyParser.json());
 
 //------------ Bodyparser Configuration ------------//
 app.use(express.urlencoded({ extended: false }));
